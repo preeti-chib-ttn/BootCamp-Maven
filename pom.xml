@@ -1,90 +1,99 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>ttn.bootcamp</groupId>
-    <artifactId>DependencyManagement</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    <repositories>
-        <!-- Q3) Add a new repository in the pom.xml and use its dependencies.-->
-        <repository>
-            <id>jboss-public</id>
-            <name>JBoss Public Repository</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public</url>
-        </repository>
-    </repositories>
-
-    <dependencies>
-        <!-- Q2) Add a maven dependency and its related repository URL.-->
-            <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.12.1</version>
-            </dependency>
-
-        <!-- Q3) Add a new repository in the pom.xml and use its dependencies.-->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.4.1.Final</version>
-        </dependency>
-
-        <!-- Q5) Differentiate between the different dependency scopes:
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ttn.bootcamp</groupId>
+  <artifactId>DependencyManagement</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <repositories>
+    <!-- Q3) Add a new repository in the pom.xml and use its dependencies.-->
+    <repository>
+      <id>jboss-public</id>
+      <name>JBoss Public Repository</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public</url>
+    </repository>
+  </repositories>
+  <dependencies>
+    <!-- Q2) Add a maven dependency and its related repository URL.-->
+    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.12.1</version>
+    </dependency>
+    <!-- Q3) Add a new repository in the pom.xml and use its dependencies.-->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>6.4.1.Final</version>
+    </dependency>
+    <!-- Q5) Differentiate between the different dependency scopes:
         compile, runtime, test, provided using different dependencies being defined in your pom.xml. -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.17.2</version>
-            <!--  compile time   -->
-        </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.17.2</version>
+      <!--  compile time   -->
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.33</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+    <!-- Q6) Create a multi-module project. Run package command at the top
+    level to make jar of every module.
+    -->
+  <modules>
+    <module>core</module>
+    <module>service</module>
+    <module>webApp</module>
+  </modules>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
+  <!-- Q6) Create a multi-module project. Run package command at the top
+    level to make jar of every module.
+    -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>6.1.13</version>
+      </dependency>
     </dependencies>
+  </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>ttn.bootcamp.executableJarDemo.PrintHelloWorld</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>ttn.bootcamp.executableJarDemo.PrintHelloWorld</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
